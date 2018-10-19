@@ -1,0 +1,43 @@
+{
+  "name": "webpack-config-paraller-builds",
+  "version": "1.0.0",
+  "description": "Example webpack configuration to run es5 and es6 builds in parallel",
+  "author": "Ekaterina Shum <kate.ushk@gmail.com>",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sweetkat/webpack-config-parallel-builds.git"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "scripts": {
+    "start": "NODE_ENV=development webpack-dev-server --config config/webpack.dev.conf.js",
+    "build": "rm -rf dist && npm run build:es5 && npm run build:es6 && npm run build:html && node app.js",
+    "build:es6": "NODE_ENV=production node config/build.js",
+    "build:es5": "NODE_ENV=production ES5=true node config/build.js",
+    "build:html": "webpack --config config/webpack.prod.html.conf.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-stage-2": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
+    "babel-loader": "^8.0.4",
+    "babel-preset-env": "^1.7.0",
+    "chalk": "^2.4.1",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.2",
+    "terser-webpack-plugin": "^1.1.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9",
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-merge": "^4.1.4"
+  }
+}
