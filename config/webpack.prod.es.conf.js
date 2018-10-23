@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const utils = require('./utils');
@@ -16,9 +16,9 @@ const buildConfig = (path, isLegacy) => merge(baseWebpackConfig, {
     },
     plugins: [
         // extract css into its own file
-        new MiniCssExtractPlugin({
-            filename: `${path}/css/[name].[contenthash].css`,
-        }),
+        // new MiniCssExtractPlugin({
+        //     filename: `${path}/css/[name].[contenthash].css`,
+        // }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new ManifestPlugin({
             fileName: `${path}/manifest.json`

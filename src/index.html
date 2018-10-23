@@ -2,10 +2,11 @@
 <body>
 <div id="app"></div>
 
+<% if (process.env.NODE_ENV === 'production') { %>
 <!-- built files -->
 
-<% if (process.env.NODE_ENV === 'production') { %>
-<link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.options.css %>">
+<!-- uncomment below to include css -->
+<!-- <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.options.css %>"> -->
 <% if (htmlWebpackPlugin.options.es5Js !== undefined) { %>
 <script nomodule src="<%= htmlWebpackPlugin.options.es5Js %>"></script>
 <% } %>
