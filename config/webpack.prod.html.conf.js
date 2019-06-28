@@ -12,7 +12,6 @@ const readManifest = (path) => {
     }
 };
 
-console.log('es5Config.output.path', es5Config.output.path)
 const es5Manifest = readManifest(`${es5Config.output.path}`);
 const es6Manifest = readManifest(`${es6Config.output.path}`);
 const es5Js = `${es5Manifest['app.js']}`;
