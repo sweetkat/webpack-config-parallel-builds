@@ -1,18 +1,23 @@
+const { resolve } = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.conf');
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const utils = require('./utils');
+const { getBabelPlugin, baseOutputPath } = require('./utils');
 
 const ES5_PATH = 'es5';
 const ES6_PATH = 'es6';
 
-const buildConfig = (path, isLegacy) => merge(baseWebpackConfig, {
+const buildConfig = (path, useEs5) => ({
+    mode: process.env.NODE_ENV,
+    entry: {
+        app: [resolve(__dirname, '../src/index.js')],
+    },
     output: {
+        path: baseOutputPath,
         filename: `${path}/js/[name].[contenthash].js`,
-        chunkFilename: `${path}js/[name].[contenthash].js`
+        chunkFilename: `${path}/js/[name].[contenthash].js`,
+        publicPath: '/',
     },
     plugins: [
         // extract css into its own file
@@ -21,12 +26,12 @@ const buildConfig = (path, isLegacy) => merge(baseWebpackConfig, {
         // }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new ManifestPlugin({
-            fileName: `${path}/manifest.json`
+            fileName: `manifest.json`
         })
     ],
     module: {
         rules: [
-            utils.getBabelPlugin(isLegacy)
+            getBabelPlugin(useEs5)
         ],
     },
     optimization: {
@@ -41,5 +46,5 @@ const es6Config = buildConfig(ES6_PATH);
 
 module.exports = {
     es6Config,
-    es5Config
+    es5Config,
 };

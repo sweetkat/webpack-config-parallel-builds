@@ -1,18 +1,20 @@
-const fs = require('fs');
-const path = require('path');
+const { existsSync } = require('fs');
+const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const baseWebpackConfig = require('./webpack.base.conf');
+const { baseOutputPath } = require('./utils');
+const { es5Config, es6Config } = require('./webpack.prod.es.conf');
 
 const readManifest = (path) => {
-    if (fs.existsSync(`${path}/manifest.json`)) {
+    if (existsSync(`${path}/manifest.json`)) {
         return require(`${path}/manifest.json`);
     } else {
         return {}
     }
 };
 
-const es5Manifest = readManifest(`${baseWebpackConfig.output.path}/${'es5'}`);
-const es6Manifest = readManifest(`${baseWebpackConfig.output.path}/${'es6'}`);
+console.log('es5Config.output.path', es5Config.output.path)
+const es5Manifest = readManifest(`${es5Config.output.path}`);
+const es6Manifest = readManifest(`${es6Config.output.path}`);
 const es5Js = `${es5Manifest['app.js']}`;
 const es6Js = `${es6Manifest['app.js']}`;
 const css = `${es6Manifest['app.css']}`;
@@ -21,7 +23,7 @@ const htmlConfig = {
     mode: 'production',
     target: "node",
     output: {
-        path: path.resolve(__dirname, '../dist'),
+        path: baseOutputPath,
         filename: "placeholder-not-used.js"
     },
     plugins: [
@@ -35,7 +37,7 @@ const htmlConfig = {
             es5Js,
             es6Js,
             css,
-            filename: path.resolve(`${baseWebpackConfig.output.path}/index.html`),
+            filename: resolve(`${baseOutputPath}/index.html`),
             template: 'src/index.html',
             inject: false,
             minify: {

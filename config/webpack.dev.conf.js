@@ -1,10 +1,19 @@
+const { resolve } = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const utils = require('./utils');
-const baseWebpackConfig = require('./webpack.base.conf');
+const { getBabelPlugin, baseOutputPath } = require('./utils');
 
-module.exports = merge(baseWebpackConfig, {
+module.exports = {
+    mode: process.env.NODE_ENV,
+    entry: {
+        app: [resolve(__dirname, '../src/index.js')],
+    },
+    output: {
+        path: baseOutputPath,
+        filename: 'js/[name].js',
+        chunkFilename: '[id].lazy.js',
+        publicPath: '/',
+    },
     devServer: {
         port: 9000,
         hot: true,
@@ -25,7 +34,7 @@ module.exports = merge(baseWebpackConfig, {
     module: {
         rules: [
             // Passing (true) can change dev build to compile down to ES5
-            utils.getBabelPlugin(),
+            getBabelPlugin(),
         ],
     }
-});
+};
