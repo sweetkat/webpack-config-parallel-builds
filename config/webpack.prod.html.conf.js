@@ -16,7 +16,8 @@ const es5Manifest = readManifest(`${es5Config.output.path}`);
 const es6Manifest = readManifest(`${es6Config.output.path}`);
 const es5Js = `${es5Manifest['app.js']}`;
 const es6Js = `${es6Manifest['app.js']}`;
-const css = `${es6Manifest['app.css']}`;
+// Add css reference if you extracted
+// const css = `${es6Manifest['app.css']}`;
 
 const htmlConfig = {
     mode: 'production',
@@ -35,7 +36,7 @@ const htmlConfig = {
         new HtmlWebpackPlugin({
             es5Js,
             es6Js,
-            css,
+            // css,
             filename: resolve(`${baseOutputPath}/index.html`),
             template: 'src/index.html',
             inject: false,
